@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tous les Articles{% endblock %}
+
+{% block body %}
+    <div class="row mt-5 ms-2">
+        {% for post in posts %}
+            <div class="card mb-3 me-2 col-sm-6 col-md-3 col-lg-2">
+                <h3 class="card-header mt-3">{{ post.title }}</h3>
+            
+                <img src="{% if post.image %}{{ asset('uploads/' ~ post.image) }}{% else %}https://www.referenseo.com/wp-content/uploads/2019/03/image-attractive-960x540.jpg{% endif %}" height="200" alt="{{ post.title }}"/>
+
+                <div class="card-body">
+                    <p class="card-text">{{ post.content [0:50]}}</p>
+                    <p><a href="{{ path('show_post', {slug : post.slug}) }}" class="card-link">Lire plus</a></p>
+                </div>
+                <div class="card-footer text-muted">
+                    Auteur : <a href="{{ path('username_post', {username: post.user}) }}">{{ post.user }}</a><br />
+                    Le : {{ post.date|date("d/m/Y") }}<br />
+                    categorie : {% if post.categories|length > 1 %} 
+                                    <ul style="text-decoration: none;">
+                                        {% for cat in post.categories %} 
+                                            <li> <a href="{{ path('category_post', {name : cat.name })}}">{{ cat.name }}</a> </li>
+                                        {% endfor %} 
+                                    </ul>
+                                {% else %}
+                                    <a href="{{ path('category_post', {name : post.categories[0] })}}">{{ post.categories[0] }}</a>
+                                {% endif %}
+                </div>
+                {%  if (app.user == post.user) %}
+                <div class="my-3 text-center">
+                    <a href="{{ path('edit_post', {slug : post.slug}) }}"><button type="button" class="btn btn-outline-info">Modifier</button></a>
+                    <a href="{{ path('delete_post', {slug : post.slug}) }}"><button type="button" class="btn btn-outline-danger">Supprimer</button></a>
+                </div>
+                {% endif %}
+            </div>
+        
+        {% else %}
+
+            <p>Pas d'articles trouvés</p>
+            
+        {% endfor %}
+    </div>
+{% endblock %}

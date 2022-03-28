@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+   <article class="container">
+        <div class="text-center">
+           <h1>{{ post.title }}</h1>
+            <div>
+                    {# pour utilisation faker #}
+                    <img src="{% if post.image %}{{ post.image }}{% else %}https://www.referenseo.com/wp-content/uploads/2019/03/image-attractive-960x540.jpg{% endif %}" height="200" alt="{{ post.title }}"/>
+                    {# utilisation normale #}
+                    {# <img src="{% if post.image %}{{ asset('uploads/' ~ post.image) }}{% else %}https://www.referenseo.com/wp-content/uploads/2019/03/image-attractive-960x540.jpg{% endif %}" height="200" alt="{{ post.title }}"/> #}
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+            <div class="col-sm-12 col-lg-8">
+                {{ post.content }}
+            </div>
+            <div class="col-sm-12 col-lg-4">
+                <div>Auteur : {{ post.user }}</div>
+                <div>Le : <a href="{{ path('date_post', {date : post.date|date("Y-m-d")})}}">{{ post.date|date("d/m/Y") }}</a></div>
+                <div>Catégorie(s) : 
+                    {% if post.categories|length > 1 %} 
+                                    <ul style="text-decoration: none;">
+                                        {% for category in post.categories %} 
+                                            <li> <a href="{{ path('category_post', {name : category.name })}}"><span class="badge rounded-pill bg-info">{{ category.name }}</span></a></li>
+                                        {% endfor %} 
+                                    </ul>
+                                {% else %}
+                                    <a href="{{ path('category_post', {name : post.categories[0] })}}"><span class="badge rounded-pill bg-info">{{ post.categories[0] }}</span></a>
+                                {% endif %}
+                </div>
+            </div>
+        </div>
+   </article>
+
+{% endblock %}
+
+
+
+

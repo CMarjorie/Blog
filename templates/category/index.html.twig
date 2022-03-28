@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CategoryController!{% endblock %}
+
+{% block body %}
+    <div class="container text-center">
+        {% for category in categories %}
+            <span class="badge rounded-pill bg-info">{{ category.name }}</span>
+        {% else %}
+            <p>Pas de catégorie trouvée !</p>
+        {% endfor %}
+    </div>
+
+{% endblock %}
