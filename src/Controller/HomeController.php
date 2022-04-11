@@ -14,10 +14,21 @@ class HomeController extends AbstractController
     public function index(PostRepository $postRepo, CategoryRepository $catRepo): Response
     {
         $cats = $catRepo->findAll();
-        $posts = $postRepo->findAll();
+         $posts = $postRepo->findby([], ["date" => "DESC"], 5 );
         return $this->render('home/index.html.twig', [
             'posts' => $posts,
             'cats' => $cats,
         ]);
     }
+
+    #[Route('/api/{number}', name: 'api')]
+    public function api(int $number= 0, PostRepository $postRepo): Response
+    {
+        $posts = $postRepo->findby([], ["date" => "DESC"], 5, $number );
+        return $this->render('home/api.html.twig', [
+            'posts' => $posts,
+            // 'number' => $number,
+        ]);
+    }
+
 }

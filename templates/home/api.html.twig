@@ -1,13 +1,4 @@
-{% extends 'base.html.twig' %}
 
-{% block title %}Homepage{% endblock %}
-
-{% block body %}
-        <div class="text-center">
-            <h1>Bienvenue sur ma page d'accueil !</h1>
-        </div>
-    <article class="container">
-        <div class="row mt-5 ms-2" id="posts">
             {% for post in posts %}
                 <div class="card mb-3 col-sm-6 col-md-4 col-lg-3">
                     <h3 class="card-header mt-3">{{ post.title }}</h3>
@@ -40,23 +31,4 @@
                     </div>
                     {% endif %}
                 </div>
-            
-            {% else %}
-
-                <p>Pas d'articles trouvés</p>
-                
             {% endfor %}
-        </div>
-        <button id="next" type="button" class="btn btn-info">Suivant</button>
-    </article>
-    <article class="container">
-        <div class="text-center">
-                        <p>Catégories</p>
-            {% for category in cats %}
-                <a href="{{ path('category_post', {name : category.name })}}"><span class="badge rounded-pill bg-info">{{ category.name }}</span>
-            {% else %}
-            <p>Pas de catégories trouvées !</p>
-            {% endfor %}
-        </div>
-    </article>
-{% endblock %}
